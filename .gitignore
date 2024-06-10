@@ -1,0 +1,7 @@
+.venv/
+.idea/
+*.csv
+build.sh
+__pycache__/
+xmas_scraper.py
+.env
