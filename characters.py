@@ -39,7 +39,7 @@ class Character():
         return f'https://wiki.bloodontheclocktower.com/File:Icon_{self.name.lower()}.png'
     
     def aliases(self) -> List[str]:
-        removal_characters = [" ", ".", "`", "\'", "-"]
+        removal_characters = [" ", ".", "`", "\'", "-", "!"]
         result = ''.join(char for char in self.name if char not in removal_characters)
 
         return [
