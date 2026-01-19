@@ -95,13 +95,23 @@ def extract_character_data(title: str, html: str) -> Character:
         if type_link:
             char_type = type_link.get_text(strip=True)
 
-    # Fallback: check for type in any table cell
+    # Fallback: check for type in any table cell with a link
     if char_type == "Unknown":
         for td in soup.find_all("td"):
             link = td.find("a", href=lambda x: x and "Character_Types" in x)
             if link:
                 char_type = link.get_text(strip=True)
                 break
+
+    # Fallback: check for type as plain text in table rows (e.g., Loric characters)
+    if char_type == "Unknown":
+        for tr in soup.find_all("tr"):
+            cells = tr.find_all("td")
+            if len(cells) >= 2:
+                label = cells[0].get_text(strip=True).lower()
+                if label == "type":
+                    char_type = cells[1].get_text(strip=True)
+                    break
 
     # Build the character link
     link = f"{BASE_URL}/{title.replace(' ', '_')}"
